@@ -193,7 +193,11 @@ const ReportView = ({ report, answers, onContactSubmit, contactSubmitted, sendin
         <div style={{ marginTop: "2rem", padding: "1.5rem", background: `rgba(16,185,129,0.1)`, border: `1px solid rgba(16,185,129,0.25)`, borderRadius: "12px", textAlign: "center" }}>
           <p style={{ fontFamily: s.serif, color: s.text, fontSize: "1.15rem", margin: "0 0 0.5rem" }}>✓ You're all set</p>
           <p style={{ fontFamily: s.sans, color: s.muted, fontSize: "0.9rem", margin: "0 0 0.75rem" }}>Your details are saved and your report is on its way to your inbox.</p>
-          {contactSubmittedWantsCall && <p style={{ fontFamily: s.sans, color: s.green, fontSize: "0.85rem", margin: 0 }}>📅 Calendly is opening so you can pick a time for your free call...</p>}
+          {contactSubmittedWantsCall && (
+            <a href="https://calendly.com/coseekai/30min" target="_blank" rel="noreferrer" style={{ display: "inline-block", marginTop: "0.75rem", padding: "0.875rem 1.75rem", background: `linear-gradient(135deg, ${s.green}, ${s.darkGreen})`, borderRadius: "8px", color: "#fff", fontFamily: s.sans, fontWeight: 600, fontSize: "0.95rem", textDecoration: "none" }}>
+              📅 Book Your Free Call Now →
+            </a>
+          )}
         </div>
       ) : (
         <div style={{ marginTop: "2.5rem", padding: "1.5rem", background: `linear-gradient(135deg, rgba(16,185,129,0.1), rgba(5,150,105,0.05))`, border: `1px solid rgba(16,185,129,0.25)`, borderRadius: "12px", textAlign: "center" }}>
@@ -270,8 +274,7 @@ export default function CoseekFinanceMOT() {
       setContactSubmitted(true);
       if (contact.wantsCall) setContactSubmittedWantsCall(true);
       if (contact.wantsCall) {
-        // Only open Calendly AFTER details have been saved and email sent
-        setTimeout(() => window.open("https://calendly.com/coseekai/30min", "_blank"), 1500);
+        // Calendly opens via button click - no automatic popup
       }
     } catch (e) {
       console.error(e);
