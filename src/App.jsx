@@ -156,14 +156,8 @@ const SoftPrompt = ({ onSubmit, onDismiss, sending }) => {
   );
 };
 
-const ReportView = ({ report, answers, onContactSubmit, contactSubmitted, sending }) => {
-  const [showPrompt, setShowPrompt] = useState(false);
+const ReportView = ({ report, answers, onContactSubmit, contactSubmitted, sending, showPrompt, onDismissPrompt }) => {
   const sections = report.split("\n\n").filter(s => s.trim());
-
-  useEffect(() => {
-    const t = setTimeout(() => setShowPrompt(true), 30000);
-    return () => clearTimeout(t);
-  }, []);
 
   return (
     <div style={{ animation: "slideIn 0.5s ease" }}>
@@ -208,7 +202,7 @@ const ReportView = ({ report, answers, onContactSubmit, contactSubmitted, sendin
       )}
 
       {showPrompt && !contactSubmitted && (
-        <SoftPrompt onSubmit={onContactSubmit} onDismiss={() => setShowPrompt(false)} sending={sending} />
+        <SoftPrompt onSubmit={onContactSubmit} onDismiss={onDismissPrompt} sending={sending} />
       )}
     </div>
   );
@@ -224,6 +218,14 @@ export default function CoseekFinanceMOT() {
   const [contactSubmitted, setContactSubmitted] = useState(false);
   const [contactSubmittedWantsCall, setContactSubmittedWantsCall] = useState(false);
   const [sending, setSending] = useState(false);
+  const [showPrompt, setShowPrompt] = useState(false);
+
+  useEffect(() => {
+    if (step === "report") {
+      const t = setTimeout(() => setShowPrompt(true), 30000);
+      return () => clearTimeout(t);
+    }
+  }, [step]);
 
   const handleStart = () => setStep("questions");
   const handleAnswer = val => setAnswers(prev => ({ ...prev, [QUESTIONS[currentQ].id]: val }));
@@ -329,7 +331,7 @@ export default function CoseekFinanceMOT() {
           )}
           {step === "questions" && <QuestionCard q={QUESTIONS[currentQ]} value={answers[QUESTIONS[currentQ].id] || ""} onChange={handleAnswer} onNext={handleNext} onBack={handleBack} isFirst={currentQ === 0} isLast={currentQ === QUESTIONS.length - 1} questionNumber={currentQ + 1} total={QUESTIONS.length} />}
           {step === "loading" && <LoadingReport />}
-          {step === "report" && <ReportView report={report} answers={answers} onContactSubmit={handleContactSubmit} contactSubmitted={contactSubmitted} sending={sending} />}
+          {step === "report" && <ReportView report={report} answers={answers} onContactSubmit={handleContactSubmit} contactSubmitted={contactSubmitted} sending={sending} showPrompt={showPrompt} onDismissPrompt={() => setShowPrompt(false)} />}
           {error && <p style={{ color: "#ef4444", fontFamily: s.sans, marginTop: "1rem", fontSize: "0.9rem" }}>{error}</p>}
         </div>
         <p style={{ fontFamily: s.mono, color: "#1f2937", fontSize: "0.7rem", marginTop: "2rem", letterSpacing: "0.08em" }}>© COSEEK · FINANCE MOT</p>
