@@ -194,9 +194,9 @@ const ReportView = ({ report, answers, onContactSubmit, contactSubmitted, sendin
           <p style={{ fontFamily: s.serif, color: s.text, fontSize: "1.15rem", margin: "0 0 0.5rem" }}>✓ You're all set</p>
           <p style={{ fontFamily: s.sans, color: s.muted, fontSize: "0.9rem", margin: "0 0 0.75rem" }}>Your details are saved and your report is on its way to your inbox.</p>
           {contactSubmittedWantsCall && (
-            <a href="https://calendly.com/coseekai/30min" target="_blank" rel="noreferrer" style={{ display: "inline-block", marginTop: "0.75rem", padding: "0.875rem 1.75rem", background: `linear-gradient(135deg, ${s.green}, ${s.darkGreen})`, borderRadius: "8px", color: "#fff", fontFamily: s.sans, fontWeight: 600, fontSize: "0.95rem", textDecoration: "none" }}>
+            <button onClick={(e) => { e.preventDefault(); e.stopPropagation(); window.open("https://calendly.com/coseekai/30min", "_blank", "noopener,noreferrer"); }} style={{ display: "inline-block", marginTop: "0.75rem", padding: "0.875rem 1.75rem", background: `linear-gradient(135deg, ${s.green}, ${s.darkGreen})`, border: "none", borderRadius: "8px", color: "#fff", fontFamily: s.sans, fontWeight: 600, fontSize: "0.95rem", cursor: "pointer" }}>
               📅 Book Your Free Call Now →
-            </a>
+            </button>
           )}
         </div>
       ) : (
