@@ -192,7 +192,8 @@ const ReportView = ({ report, answers, onContactSubmit, contactSubmitted, sendin
       {contactSubmitted ? (
         <div style={{ marginTop: "2rem", padding: "1.5rem", background: `rgba(16,185,129,0.1)`, border: `1px solid rgba(16,185,129,0.25)`, borderRadius: "12px", textAlign: "center" }}>
           <p style={{ fontFamily: s.serif, color: s.text, fontSize: "1.15rem", margin: "0 0 0.5rem" }}>✓ You're all set</p>
-          <p style={{ fontFamily: s.sans, color: s.muted, fontSize: "0.9rem", margin: 0 }}>Check your inbox — your report is on its way. We'll be in touch soon.</p>
+          <p style={{ fontFamily: s.sans, color: s.muted, fontSize: "0.9rem", margin: "0 0 0.75rem" }}>Your details are saved and your report is on its way to your inbox.</p>
+          {contactSubmittedWantsCall && <p style={{ fontFamily: s.sans, color: s.green, fontSize: "0.85rem", margin: 0 }}>📅 Calendly is opening so you can pick a time for your free call...</p>}
         </div>
       ) : (
         <div style={{ marginTop: "2.5rem", padding: "1.5rem", background: `linear-gradient(135deg, rgba(16,185,129,0.1), rgba(5,150,105,0.05))`, border: `1px solid rgba(16,185,129,0.25)`, borderRadius: "12px", textAlign: "center" }}>
@@ -217,6 +218,7 @@ export default function CoseekFinanceMOT() {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const [contactSubmitted, setContactSubmitted] = useState(false);
+  const [contactSubmittedWantsCall, setContactSubmittedWantsCall] = useState(false);
   const [sending, setSending] = useState(false);
 
   const handleStart = () => setStep("questions");
@@ -266,8 +268,10 @@ export default function CoseekFinanceMOT() {
         body: JSON.stringify({ answers: summary, report, contact, emailOnly: true })
       });
       setContactSubmitted(true);
+      if (contact.wantsCall) setContactSubmittedWantsCall(true);
       if (contact.wantsCall) {
-        setTimeout(() => window.open("https://calendly.com/coseekai/30min", "_blank"), 500);
+        // Only open Calendly AFTER details have been saved and email sent
+        setTimeout(() => window.open("https://calendly.com/coseekai/30min", "_blank"), 1500);
       }
     } catch (e) {
       console.error(e);
