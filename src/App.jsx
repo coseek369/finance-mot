@@ -187,11 +187,9 @@ const ReportView = ({ report, answers, onContactSubmit, contactSubmitted, sendin
         <div style={{ marginTop: "2rem", padding: "1.5rem", background: `rgba(16,185,129,0.1)`, border: `1px solid rgba(16,185,129,0.25)`, borderRadius: "12px", textAlign: "center" }}>
           <p style={{ fontFamily: s.serif, color: s.text, fontSize: "1.15rem", margin: "0 0 0.5rem" }}>✓ You're all set</p>
           <p style={{ fontFamily: s.sans, color: s.muted, fontSize: "0.9rem", margin: "0 0 0.75rem" }}>Your details are saved and your report is on its way to your inbox.</p>
-          {contactSubmittedWantsCall && (
-            <button onClick={(e) => { e.preventDefault(); e.stopPropagation(); window.open("https://calendly.com/coseekai/30min", "_blank", "noopener,noreferrer"); }} style={{ display: "inline-block", marginTop: "0.75rem", padding: "0.875rem 1.75rem", background: `linear-gradient(135deg, ${s.green}, ${s.darkGreen})`, border: "none", borderRadius: "8px", color: "#fff", fontFamily: s.sans, fontWeight: 600, fontSize: "0.95rem", cursor: "pointer" }}>
-              📅 Book Your Free Call Now →
-            </button>
-          )}
+          <a href="https://calendly.com/coseekai/30min" target="_blank" rel="noreferrer" onClick={(e) => e.stopPropagation()} style={{ display: "inline-block", marginTop: "0.75rem", padding: "0.875rem 1.75rem", background: `linear-gradient(135deg, ${s.green}, ${s.darkGreen})`, borderRadius: "8px", color: "#fff", fontFamily: s.sans, fontWeight: 600, fontSize: "0.95rem", textDecoration: "none" }}>
+            📅 Book Your Free Call →
+          </a>
         </div>
       ) : (
         <div style={{ marginTop: "2.5rem", padding: "1.5rem", background: `linear-gradient(135deg, rgba(16,185,129,0.1), rgba(5,150,105,0.05))`, border: `1px solid rgba(16,185,129,0.25)`, borderRadius: "12px", textAlign: "center" }}>
@@ -216,7 +214,6 @@ export default function CoseekFinanceMOT() {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const [contactSubmitted, setContactSubmitted] = useState(false);
-  const [contactSubmittedWantsCall, setContactSubmittedWantsCall] = useState(false);
   const [sending, setSending] = useState(false);
   const [showPrompt, setShowPrompt] = useState(false);
 
@@ -274,9 +271,7 @@ export default function CoseekFinanceMOT() {
         body: JSON.stringify({ answers: summary, report, contact, emailOnly: true })
       });
       setContactSubmitted(true);
-      if (contact.wantsCall) setContactSubmittedWantsCall(true);
       if (contact.wantsCall) {
-        // Calendly opens via button click - no automatic popup
       }
     } catch (e) {
       console.error(e);
