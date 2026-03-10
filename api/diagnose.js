@@ -68,7 +68,7 @@ Keep the whole report to around 400-500 words. Make it feel like it was written 
           'Authorization': `Bearer ${process.env.RESEND_API_KEY}`
         },
         body: JSON.stringify({
-          from: 'Coseek Finance MOT <contact@coseek.ai>',
+          from: 'Coseek <contact@coseek.ai>',
           to: 'contact@coseek.ai',
           subject: `${contact.wantsCall ? '🟢 WANTS A CALL' : '📧 Report Only'} — New Finance MOT: ${contact.company ? contact.company + ' · ' : ''}${contact.name || contact.email}`,
           html: `<div style="background:#030712;padding:32px;font-family:sans-serif;max-width:700px;margin:0 auto;">
@@ -102,9 +102,9 @@ Keep the whole report to around 400-500 words. Make it feel like it was written 
           'Authorization': `Bearer ${process.env.RESEND_API_KEY}`
         },
         body: JSON.stringify({
-          from: 'Coseek Finance MOT <contact@coseek.ai>',
+          from: 'Coseek <contact@coseek.ai>',
           to: contact.email,
-          subject: 'Your Coseek Finance MOT Report',
+          subject: 'Your Finance MOT Report is ready',
           html: `<div style="background:#030712;padding:32px;font-family:sans-serif;max-width:700px;margin:0 auto;">
             <div style="margin-bottom:24px;"><span style="color:#f9fafb;font-size:20px;font-weight:700;">⚡ COSEEK FINANCE MOT</span></div>
             <p style="color:#f9fafb;font-size:22px;font-weight:700;margin:0 0 8px;">Hi ${contact.name ? contact.name.split(' ')[0] : 'there'},</p>
