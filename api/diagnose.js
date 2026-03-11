@@ -29,7 +29,7 @@ export default async function handler(req, res) {
         headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${process.env.RESEND_API_KEY}` },
         body: JSON.stringify({
           from: 'Coseek <contact@coseek.ai>',
-          to: 'contact@coseek.ai',
+          to: 'coseekai@gmail.com',
           subject: `${contact.wantsCall ? '🟢 WANTS A CALL' : '📧 Report Only'} — New Finance MOT: ${contact.company ? contact.company + ' · ' : ''}${contact.name || contact.email}`,
           html: `<div style="background:#030712;padding:32px;font-family:sans-serif;max-width:700px;margin:0 auto;">
             <div style="margin-bottom:24px;"><span style="color:#f9fafb;font-size:20px;font-weight:700;">⚡ COSEEK FINANCE MOT</span></div>
@@ -147,7 +147,7 @@ Keep the whole report to around 400-500 words. Make it feel like it was written 
         },
         body: JSON.stringify({
           from: 'Coseek <contact@coseek.ai>',
-          to: 'contact@coseek.ai',
+          to: 'coseekai@gmail.com',
           subject: `${contact.wantsCall ? '🟢 WANTS A CALL' : '📧 Report Only'} — New Finance MOT: ${contact.company ? contact.company + ' · ' : ''}${contact.name || contact.email}`,
           html: `<div style="background:#030712;padding:32px;font-family:sans-serif;max-width:700px;margin:0 auto;">
             <div style="margin-bottom:24px;"><span style="color:#f9fafb;font-size:20px;font-weight:700;">⚡ COSEEK FINANCE MOT</span></div>
