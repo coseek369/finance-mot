@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-
+ 
 const QUESTIONS = [
   { id: "turnover", question: "What is your approximate annual turnover?", subtitle: "A rough ballpark is absolutely fine", type: "select", options: ["Under £250k", "£250k – £500k", "£500k – £1m", "£1m – £3m", "£3m – £10m", "Over £10m"] },
   { id: "employees", question: "How many people work in the business?", subtitle: "Include yourself", type: "select", options: ["Just me", "2–5", "6–15", "16–50", "50+"] },
@@ -12,7 +12,7 @@ const QUESTIONS = [
   { id: "biggest_headache", question: "What is your biggest financial headache right now?", subtitle: "In your own words — no wrong answers", type: "text", placeholder: "e.g. I never know if I'm actually making money until my accountant tells me..." },
   { id: "fix_90_days", question: "If you could fix one financial problem in the next 90 days, what would it be?", subtitle: "This helps us prioritise what matters most to you", type: "text", placeholder: "e.g. I want to know my numbers without having to chase my bookkeeper..." }
 ];
-
+ 
 const s = {
   mono: "'DM Mono', monospace",
   serif: "'Playfair Display', serif",
@@ -26,7 +26,7 @@ const s = {
   muted: "#9ca3af",
   dim: "#6b7280",
 };
-
+ 
 const ProgressBar = ({ current, total }) => (
   <div style={{ marginBottom: "2rem" }}>
     <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "0.5rem" }}>
@@ -38,7 +38,7 @@ const ProgressBar = ({ current, total }) => (
     </div>
   </div>
 );
-
+ 
 const QuestionCard = ({ q, value, onChange, onNext, onBack, isFirst, isLast, questionNumber, total }) => {
   const canProceed = value && value.trim() !== "";
   return (
@@ -74,7 +74,7 @@ const QuestionCard = ({ q, value, onChange, onNext, onBack, isFirst, isLast, que
     </div>
   );
 };
-
+ 
 const LoadingReport = () => {
   const steps = ["Analysing your business profile...", "Identifying cash flow risks...", "Reviewing your reporting gaps...", "Calculating your MOT score...", "Building your action plan..."];
   const [step, setStep] = useState(0);
@@ -87,7 +87,7 @@ const LoadingReport = () => {
     </div>
   );
 };
-
+ 
 const SoftPrompt = ({ onSubmit, onDismiss, sending }) => {
   const [mode, setMode] = useState(null); // 'call' or 'report'
   const [company, setCompany] = useState("");
@@ -96,13 +96,13 @@ const SoftPrompt = ({ onSubmit, onDismiss, sending }) => {
   const [phone, setPhone] = useState("");
   const [agreed, setAgreed] = useState(false);
   const [visible, setVisible] = useState(false);
-
+ 
   useEffect(() => { const t = setTimeout(() => setVisible(true), 100); return () => clearTimeout(t); }, []);
-
+ 
   const canSubmit = company.trim() && name.trim() && email.trim() && agreed && (mode === 'report' || (mode === 'call' && phone.trim()));
-
+ 
   const inputStyle = { width: "100%", padding: "0.75rem 1rem", background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.1)", borderRadius: "8px", color: s.text, fontFamily: s.sans, fontSize: "0.9rem", outline: "none", boxSizing: "border-box" };
-
+ 
   return (
     <div style={{ position: "fixed", bottom: 0, left: 0, right: 0, zIndex: 100, padding: "1rem", transform: visible ? "translateY(0)" : "translateY(100%)", transition: "transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1)" }}>
       <div style={{ maxWidth: "640px", margin: "0 auto", background: "#0f172a", border: `1px solid ${s.green}`, borderRadius: "16px 16px 0 0", padding: "1.5rem", boxShadow: "0 -20px 60px rgba(0,0,0,0.5)" }}>
@@ -155,10 +155,10 @@ const SoftPrompt = ({ onSubmit, onDismiss, sending }) => {
     </div>
   );
 };
-
+ 
 const ReportView = ({ report, answers, onContactSubmit, contactSubmitted, sending, showPrompt, onDismissPrompt }) => {
   const sections = report.split("\n\n").filter(s => s.trim());
-
+ 
   return (
     <div style={{ animation: "slideIn 0.5s ease" }}>
       <div style={{ display: "flex", alignItems: "center", gap: "1rem", marginBottom: "2rem", paddingBottom: "1.5rem", borderBottom: `1px solid ${s.border}` }}>
@@ -168,7 +168,7 @@ const ReportView = ({ report, answers, onContactSubmit, contactSubmitted, sendin
           <p style={{ fontFamily: s.mono, color: s.dim, fontSize: "0.75rem", margin: "0.25rem 0 0", letterSpacing: "0.1em" }}>POWERED BY COSEEK AI</p>
         </div>
       </div>
-
+ 
       <div style={{ fontFamily: s.sans, color: "#d1d5db", lineHeight: 1.8, fontSize: "0.95rem" }}>
         {sections.map((section, i) => {
           const cleaned = section.replace(/\*\*/g, "").replace(/^#+\s/, "");
@@ -182,7 +182,7 @@ const ReportView = ({ report, answers, onContactSubmit, contactSubmitted, sendin
           return <p key={i} style={{ marginBottom: "1rem" }}>{cleaned}</p>;
         })}
       </div>
-
+ 
       {contactSubmitted ? (
         <div style={{ marginTop: "2rem", padding: "1.5rem", background: `rgba(16,185,129,0.1)`, border: `1px solid rgba(16,185,129,0.25)`, borderRadius: "12px", textAlign: "center" }}>
           <p style={{ fontFamily: s.serif, color: s.text, fontSize: "1.15rem", margin: "0 0 0.5rem" }}>✓ You're all set</p>
@@ -198,14 +198,14 @@ const ReportView = ({ report, answers, onContactSubmit, contactSubmitted, sendin
           <a href="https://calendly.com/coseekai/30min" target="_blank" rel="noreferrer" style={{ display: "inline-block", padding: "0.875rem 2rem", background: `linear-gradient(135deg, ${s.green}, ${s.darkGreen})`, borderRadius: "8px", color: "#fff", fontFamily: s.sans, fontWeight: 600, fontSize: "0.95rem", textDecoration: "none" }}>Book a Free Call →</a>
         </div>
       )}
-
+ 
       {showPrompt && !contactSubmitted && (
         <SoftPrompt onSubmit={onContactSubmit} onDismiss={onDismissPrompt} sending={sending} />
       )}
     </div>
   );
 };
-
+ 
 export default function CoseekFinanceMOT() {
   const [step, setStep] = useState("intro");
   const [currentQ, setCurrentQ] = useState(0);
@@ -216,18 +216,18 @@ export default function CoseekFinanceMOT() {
   const [contactSubmitted, setContactSubmitted] = useState(false);
   const [sending, setSending] = useState(false);
   const [showPrompt, setShowPrompt] = useState(false);
-
+ 
   useEffect(() => {
     if (step === "report") {
       const t = setTimeout(() => setShowPrompt(true), 30000);
       return () => clearTimeout(t);
     }
   }, [step]);
-
+ 
   const handleStart = () => setStep("questions");
   const handleAnswer = val => setAnswers(prev => ({ ...prev, [QUESTIONS[currentQ].id]: val }));
   const handleBack = () => { if (currentQ > 0) setCurrentQ(q => q - 1); };
-
+ 
   const handleNext = async () => {
     if (currentQ < QUESTIONS.length - 1) {
       setCurrentQ(q => q + 1);
@@ -237,7 +237,7 @@ export default function CoseekFinanceMOT() {
       await generateReport(null);
     }
   };
-
+ 
   const generateReport = async (contact) => {
     const summary = QUESTIONS.map(q => `${q.question}: ${answers[q.id] || "Not answered"}`).join("\n");
     try {
@@ -260,7 +260,7 @@ export default function CoseekFinanceMOT() {
       setLoading(false);
     }
   };
-
+ 
   const handleContactSubmit = async (contact) => {
     setSending(true);
     const summary = QUESTIONS.map(q => `${q.question}: ${answers[q.id] || "Not answered"}`).join("\n");
@@ -279,7 +279,7 @@ export default function CoseekFinanceMOT() {
       setSending(false);
     }
   };
-
+ 
   return (
     <>
       <style>{`
@@ -291,13 +291,13 @@ export default function CoseekFinanceMOT() {
       `}</style>
       <div style={{ minHeight: "100vh", background: s.bg, backgroundImage: "radial-gradient(ellipse at 20% 50%, rgba(16,185,129,0.06) 0%, transparent 60%)", display: "flex", flexDirection: "column", alignItems: "center", padding: "2rem 1rem" }}>
         <div style={{ width: "100%", maxWidth: "640px", display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "3rem" }}>
-          <div style={{ display: "flex", alignItems: "center", gap: "0.75rem" }}>
+          <a href="https://coseek.ai" style={{ display: "flex", alignItems: "center", gap: "0.75rem", textDecoration: "none" }}>
             <div style={{ width: "32px", height: "32px", background: `linear-gradient(135deg, ${s.green}, ${s.darkGreen})`, borderRadius: "8px", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "0.9rem" }}>⚡</div>
             <span style={{ fontFamily: s.mono, color: s.text, fontSize: "0.9rem", fontWeight: 500, letterSpacing: "0.05em" }}>COSEEK</span>
-          </div>
+          </a>
           <span style={{ fontFamily: s.mono, color: s.dim, fontSize: "0.7rem", letterSpacing: "0.1em", textTransform: "uppercase" }}>Finance MOT</span>
         </div>
-
+ 
         <div style={{ width: "100%", maxWidth: "640px", background: s.card, border: `1px solid ${s.border}`, borderRadius: "16px", padding: "clamp(1.5rem, 5vw, 2.5rem)", backdropFilter: "blur(10px)" }}>
           {step === "intro" && (
             <div style={{ animation: "slideIn 0.5s ease" }}>
